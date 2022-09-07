@@ -50,8 +50,6 @@ class SqlStream(Stream):
         data = Client(config=self.config).send(self._query_template)
 
         for row in data:
-            # record = [row.get(f, '') for f in self._query['fields']]
-            record = row
-
+            record = {k: row.get(k, "") for k in self._query["fields"]}
             record["system_id"] = time.time_ns()
             yield record
